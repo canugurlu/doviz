@@ -18,21 +18,19 @@ server.listen(3000);
 app.get('/', async (req, res) => {
     var results = [];
     try {
-        const url = "https://altin.doviz.com/odaci";
+        const url = "https://altin.doviz.com/gram-altin";
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
 
-        $("#golds > tbody > tr").each((index, element) => {
+        $("body > div.wrapper > div.kur-page > div.article-content > div.value-table > div > table > tbody > tr").each((index, element) => {
             var name = $(element).find("td:nth-child(1)").text();
             var buy = $(element).find("td:nth-child(2)").text();
             var sell = $(element).find("td:nth-child(3)").text();
-            var change = $(element).find("td:nth-child(4)").text();
             if (name.trim()) {
                 results.push({
                     name: name.trim(),
                     buy: buy.trim(),
-                    sell: sell.trim(),
-                    change: change.trim(),
+                    sell: sell.trim()
                 });
             }
 
